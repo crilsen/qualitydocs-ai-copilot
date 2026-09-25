@@ -2,12 +2,12 @@
 
 ## Resume block (read first)
 
-- Repo state: branch `main`, 3 commits, HEAD at docs commit, working tree clean, pushed to origin + tag v0.1.0 + GitHub release
+- Repo state: branch `main`, 5 commits, working tree clean, pushed to origin (release v0.1.0 tag unchanged; providers on main unreleased)
 - Source of truth: `AGENTS.md` → `.ai/`
 - Budget / usage observed: unknown
 - Checkpoint updated: 2026-09-25
-- Last goal: Build MVP v0.1.0 and publish first public release — DONE
-- Exact next action: None pending. Next session: pick a follow-up (providers, OCR, auth) or demo via `cp .env.example .env && docker compose up --build`
+- Last goal: Adapt app to Codex/OpenAI, OpenCode and Gemini providers — DONE (pushed, not released)
+- Exact next action: Optional: release v0.2.0, or demo via `cp .env.example .env && docker compose up --build`
 - Blocked by: None.
 - Contexto durável: Automático (não perguntar de novo)
 - Resume prompt: `Read AGENTS.md and .ai/HANDOFF.md. Continue from the Resume block. Do not rediscover context.`
