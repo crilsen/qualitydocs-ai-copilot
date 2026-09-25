@@ -11,6 +11,7 @@ Modo: Simple (inline até ~15–20 registros).
 | ADR-002 | ADR | Prompts versionados em arquivos Markdown, não no código | Accepted | 2026-09-25 |
 | TDR-002 | TDR | Extração PDF com pypdf e DOCX com python-docx | Accepted | 2026-09-25 |
 | ADR-003 | ADR | Revisão humana por finding com status + comentário, nunca auto-aprovação | Accepted | 2026-09-25 |
+| TDR-003 | TDR | Multi-provider LLM: Anthropic + OpenAI + Gemini + OpenAI-compat + local, seleção por run | Accepted | 2026-09-25 |
 
 ## Records
 
@@ -37,6 +38,12 @@ Type: TDR | Status: Accepted | Date: 2026-09-25
 Context: Upload 2–5 arquivos PDF/DOCX com página/seção.
 Decision: `pypdf` para PDF, `python-docx` para DOCX.
 Consequences: Sem OCR no MVP (PDF escaneado retorna aviso amigável).
+
+### TDR-003 — Multi-provider LLM com seleção por run
+Type: TDR | Status: Accepted | Date: 2026-09-25 | Owners: usuário + agente
+Context: Usuário pediu o app adaptado para Codex (OpenAI), OpenCode e Gemini, além do Anthropic inicial.
+Decision: Registry `PROVIDERS` em `app/services/llm.py` com ids anthropic/openai/gemini/compat/local; `GET /api/providers` expõe disponibilidade; `RunAnalysisRequest.provider` (default auto, cloud primeiro, local por último); erro 400 amigável com a env var que falta; provider compat cobre OpenCode gateway/OpenRouter/Ollama/vLLM com retry sem JSON estrito. Pydantic elevado a 2.13.5 (exigido por google-genai).
+Consequences: Troca de modelo sem mudar rotas; demo offline continua funcionando sem chaves.
 
 ### ADR-003 — Revisão humana por finding
 Type: ADR | Status: Accepted | Date: 2026-09-25

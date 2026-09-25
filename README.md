@@ -48,11 +48,21 @@ cd backend && pip install -r requirements.txt && python -m app.seed && uvicorn a
 cd frontend && npm install && npm run dev
 ```
 
-## Anthropic API setup
+## AI provider setup
 
-1. Get a key at console.anthropic.com (never commit it).
-2. Put `ANTHROPIC_API_KEY=...` in `.env`, optionally set `ANTHROPIC_MODEL` and `LLM_PROVIDER=anthropic`.
-3. Restart the backend. Runs record model + latency; without a key the offline demo provider is used automatically.
+Pick the provider per analysis run in the UI, or set `LLM_PROVIDER` in `.env`. `auto` uses the first configured provider (Anthropic → OpenAI → Gemini → compat), otherwise the offline demo. Every run records provider, model, and latency. Without any key the offline demo provider runs automatically.
+
+| Provider | Env vars | Default model |
+| --- | --- | --- |
+| `anthropic` — Anthropic Claude | `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` | claude-3-5-sonnet-20240620 |
+| `openai` — OpenAI GPT / Codex models | `OPENAI_API_KEY`, `OPENAI_MODEL` | gpt-4o-mini |
+| `gemini` — Google Gemini | `GEMINI_API_KEY` (or `GOOGLE_API_KEY`), `GEMINI_MODEL` | gemini-2.0-flash |
+| `compat` — OpenAI-compatible endpoint (OpenCode gateway, OpenRouter, Ollama, vLLM) | `COMPAT_BASE_URL`, `COMPAT_MODEL`, `COMPAT_API_KEY` (use any non-empty value for keyless local servers) | — |
+| `local` — offline demo, no key | — | local-demo-v1 |
+
+1. Copy `.env.example` to `.env` and fill the keys you want (never commit `.env`).
+2. Restart the backend. Check configured providers at `GET /api/providers`.
+3. The compat provider retries without strict JSON mode for servers that don't support it (e.g. plain Ollama); results are still validated against the Pydantic schema.
 
 ## Analysis modes
 

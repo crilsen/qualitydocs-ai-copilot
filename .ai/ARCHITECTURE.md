@@ -8,11 +8,12 @@
                           ┌──────────────┼──────────────┐
                           │              │              │
                    [Extrator        [Prompt          [LLM Provider
-                    PDF/DOCX]        Registry]        abstrato]
-                    pypdf/           prompts/*.md     Anthropic Claude
-                    python-docx      versionados      (stub sem chave)
-                                     + Pydantic       futuro: OpenAI/Gemini
-                                     output schema
+                    PDF/DOCX]        Registry]        registry: anthropic
+                    pypdf/           prompts/*.md     openai (GPT/Codex)
+                    python-docx      versionados      gemini
+                                     + Pydantic       compat (OpenCode/
+                                     output schema   OpenRouter/Ollama)
+                                                     local demo (sem chave)]
 ```
 
 ## Fluxo

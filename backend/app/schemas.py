@@ -32,6 +32,7 @@ class RunAnalysisRequest(BaseModel):
     mode: Literal["executive_summary", "document_comparison", "missing_items", "divergence", "risk", "action_plan"]
     document_ids: List[int] = Field(min_length=2, max_length=5)
     prompt_version: str = "v1.0.0"
+    provider: str = "auto"  # auto | anthropic | openai | gemini | compat | local
 
 
 class ReviewUpdate(BaseModel):

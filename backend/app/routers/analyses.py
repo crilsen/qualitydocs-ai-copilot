@@ -7,7 +7,7 @@ from ..database import get_db
 from ..models import AnalysisRun, Document, Finding
 from ..schemas import AnalysisResult, RunAnalysisRequest
 from ..services.injection_guard import scan, wrap_as_data
-from ..services.llm import get_provider
+from ..services.llm import ProviderUnavailableError, get_provider, list_providers
 from ..services.prompt_registry import list_prompts, load_prompt
 
 router = APIRouter(tags=["analyses"])
@@ -16,6 +16,11 @@ router = APIRouter(tags=["analyses"])
 @router.get("/api/prompts")
 def prompts():
     return {"prompts": list_prompts()}
+
+
+@router.get("/api/providers")
+def providers():
+    return {"providers": list_providers()}
 
 
 @router.post("/api/analyses/run")
@@ -33,7 +38,10 @@ def run_analysis(req: RunAnalysisRequest, db: Session = Depends(get_db)):
             injection_notes.append(f"Suspicious instruction-like text detected in {d.filename}; treated strictly as data.")
         ctx_parts.append(wrap_as_data(d.filename, d.pages_or_sections, d.text_content or ""))
     context = "\n\n".join(ctx_parts)
-    provider = get_provider()
+    try:
+        provider = get_provider(req.provider or "auto")
+    except ProviderUnavailableError as e:
+        raise HTTPException(400, str(e))
     t0 = time.perf_counter()
     try:
         raw, model_name = provider.analyze(prompt_text, context, req.mode)
@@ -52,7 +60,7 @@ def run_analysis(req: RunAnalysisRequest, db: Session = Depends(get_db)):
         limitations.append(f"{dropped} finding(s) were withheld because they had no evidence.")
     limitations.extend(injection_notes)
     run = AnalysisRun(mode=req.mode, prompt_version=version, prompt_text=prompt_text[:8000],
-                      model=f"{provider.name}:{model_name}", latency_ms=latency_ms,
+                      model=f"{provider.id}:{model_name}", latency_ms=latency_ms,
                       document_ids=",".join(map(str, req.document_ids)),
                       executive_summary=validated.executive_summary,
                       limitations=json.dumps(limitations), raw_json=json.dumps(raw)[:50000])

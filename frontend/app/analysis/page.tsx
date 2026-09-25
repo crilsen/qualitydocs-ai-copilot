@@ -9,12 +9,15 @@ export default function AnalysisPage() {
   const [mode, setMode] = useState(MODES[0].id);
   const [version, setVersion] = useState("v1.0.0");
   const [versions, setVersions] = useState<any[]>([]);
+  const [provider, setProvider] = useState("auto");
+  const [providers, setProviders] = useState<any[]>([]);
   const [msg, setMsg] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     api("/api/documents").then((d) => setDocs(d.documents)).catch((e) => setMsg(String(e)));
     api("/api/prompts").then((p) => setVersions(p.prompts)).catch(() => {});
+    api("/api/providers").then((p) => setProviders(p.providers)).catch(() => {});
   }, []);
 
   function toggle(id: number) {
@@ -24,7 +27,7 @@ export default function AnalysisPage() {
   async function run() {
     setMsg("");
     try {
-      const r = await api("/api/analyses/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode, document_ids: sel, prompt_version: version }) });
+      const r = await api("/api/analyses/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode, document_ids: sel, prompt_version: version, provider }) });
       router.push(`/results?run=${r.run_id}`);
     } catch (e: any) { setMsg(`Analysis failed: ${e.message?.slice(0, 400)}`); }
   }
@@ -40,12 +43,28 @@ export default function AnalysisPage() {
           </button>
         ))}
       </div>
-      <div>
-        <label className="text-sm font-medium">Prompt version</label>
+      <div className="flex flex-wrap gap-4">
+        <div>
+          <label className="text-sm font-medium">AI provider</label>
+          <select value={provider} onChange={(e) => setProvider(e.target.value)} className="ml-2 border rounded p-1 text-sm">
+            <option value="auto">Auto (first configured)</option>
+            {providers.map((p) => (
+              <option key={p.id} value={p.id} disabled={!p.available && p.id !== "local"}>
+                {p.label}{!p.available ? " — not configured" : ""}
+              </option>
+            ))}
+          </select>
+          {providers.filter((p) => !p.available && p.needs_key).length > 0 && (
+            <p className="text-xs text-slate-500 mt-1">Unconfigured providers need keys in .env — see README.</p>
+          )}
+        </div>
+        <div>
+          <label className="text-sm font-medium">Prompt version</label>
         <select value={version} onChange={(e) => setVersion(e.target.value)} className="ml-2 border rounded p-1 text-sm">
           {Array.from(new Set(versions.map((v) => v.version))).map((v) => <option key={v} value={v}>{v}</option>)}
           {!versions.length && <option value="v1.0.0">v1.0.0</option>}
         </select>
+        </div>
       </div>
       <div>
         <h3 className="text-sm font-medium mb-1">Documents ({sel.length}/5, need 2–5)</h3>
