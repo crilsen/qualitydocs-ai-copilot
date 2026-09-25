@@ -2,45 +2,49 @@
 
 ## Resume block (read first)
 
-- Repo state: sem git ainda; working tree com .ai/ preenchido (modo Automático)
+- Repo state: branch `main`, 3 commits, HEAD at docs commit, working tree clean, pushed to origin + tag v0.1.0 + GitHub release
 - Source of truth: `AGENTS.md` → `.ai/`
 - Budget / usage observed: unknown
 - Checkpoint updated: 2026-09-25
-- Last goal: Construir MVP Document Quality AI Copilot v0.1.0 e publicar primeira release pública
-- Exact next action: Criar estrutura do projeto + documentos sintéticos + prompts versionados, depois backend
+- Last goal: Build MVP v0.1.0 and publish first public release — DONE
+- Exact next action: None pending. Next session: pick a follow-up (providers, OCR, auth) or demo via `cp .env.example .env && docker compose up --build`
 - Blocked by: None.
-- Contexto durável: Automático (escolha do usuário; não perguntar de novo)
+- Contexto durável: Automático (não perguntar de novo)
 - Resume prompt: `Read AGENTS.md and .ai/HANDOFF.md. Continue from the Resume block. Do not rediscover context.`
 
 ## Goal
 
-MVP completo em PT: upload 2–5 PDF/DOCX, 6 modos de análise, prompts versionados, saída JSON Pydantic rastreável, revisão humana, governança, segurança anti-injection, evaluation, Docker Compose, README PT, repo público + release v0.1.0.
+MVP v0.1.0 released at https://github.com/crilsen/qualitydocs-ai-copilot/releases/tag/v0.1.0
 
 ## Current State
 
-Contexto bootstrap concluído. Estrutura da aplicação ainda não criada.
+Public repo `crilsen/qualitydocs-ai-copilot` with topics, 3 logical commits, release v0.1.0.
 
 ## What Was Done
 
-- Preenchidos PROJECT, ARCHITECTURE, CONVENTIONS, VALIDATION, DECISIONS, TASKS.
-- Confirmado: gh autenticado (crilsen), sem git, python/node/docker disponíveis.
+- Full MVP: backend, 6 versioned prompts, frontend 7 screens, evaluation, README (all in English; conversation in PT-BR per user).
+- Validated: pytest 4/4, evaluation 5/5, Next build 7 routes, compose build + backend smoke (health + governance OK).
 
 ## Files Changed
 
-- .ai/PROJECT.md, ARCHITECTURE.md, CONVENTIONS.md, VALIDATION.md, DECISIONS.md, TASKS.md
+- All project files (see 3 commits). Local-only (untracked): `.env` (from example), no secrets committed.
 
 ## Decisions Made
 
-- Modo Automático de contexto; stack e escopo conforme spec do usuário.
+- Conversation PT-BR / files EN (user, 2026-09-25).
+- `db.query().get()` → `db.get()` (SQLAlchemy 2.0).
+- Backend Dockerfile drops prompts copy; prompts mounted ro via compose + embedded defaults fallback.
+- `next-env.d.ts` + `package-lock.json` kept in repo.
 
 ## Problems / Risks
 
-- Nenhum dado real; usar apenas sintéticos. Sem termo "enterprise".
+- Homebrew Python 3.14 is PEP-668 externally managed → validation done via Docker (python:3.12, node:20). Documented here for next sessions.
 
 ## Validation Performed
 
-- None ainda.
+- Validated: backend tests, evaluation, frontend build, compose config/build, container smoke test.
+- Not validated: full `docker compose up` with frontend (images built, backend smoke OK).
 
 ## Next Actions
 
-- Criar estrutura, backend, frontend, evaluation, validar, git init + gh repo create público + release.
+- Demo: `cp .env.example .env && docker compose up --build` (UI :3000, API :8000).
