@@ -1,0 +1,7 @@
+[
+  {"id": "q1", "question": "Which lots were released without an inspection record?", "expected": "LOT-881 and LOT-882", "mode": "missing_items"},
+  {"id": "q2", "question": "What is the torque specification and which lot is out of spec?", "expected": "12.0 Nm +/- 0.5; LOT-881 at 11.2 Nm", "mode": "risk"},
+  {"id": "q3", "question": "Which AQL values diverge between documents?", "expected": "PROC-014 AQL 1.0 vs SPEC-208 AQL 1.5 (v2 had 2.5)", "mode": "divergence"},
+  {"id": "q4", "question": "Which calibration is expired and what is missing on PROC-014 v3?", "expected": "CAL-07 expired 2026-02-10; approval signature missing", "mode": "nonconformity"},
+  {"id": "q5", "question": "What containment action is overdue?", "expected": "NCR-031 containment overdue since 2026-09-10", "mode": "action_plan"}
+]
