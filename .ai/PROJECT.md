@@ -3,26 +3,26 @@
 ## Identity
 
 - **Name:** Document Quality AI Copilot (qualitydocs-ai-copilot)
-- **Objective:** Aplicação web para consolidar, comparar e validar documentos de qualidade com IA generativa, demonstrando Prompt Engineering, Context Engineering, rastreabilidade, revisão humana e governança básica.
-- **Status:** MVP v0.1.0 em construção (primeira release, portfólio, apenas dados sintéticos).
-- **Idioma:** Interface e documentação em português.
+- **Objective:** Web app to consolidate, compare, and validate quality documents with generative AI, demonstrating Prompt Engineering, Context Engineering, traceability, human review, and basic governance.
+- **Status:** MVP v0.1.0 released; multi-provider LLM support on main (unreleased). Portfolio project, synthetic data only.
+- **Language:** All project files in English; conversation with user in PT-BR.
 
-## Stack (observado do escopo aprovado)
+## Stack (observed from approved scope)
 
-- Backend: Python 3.12 + FastAPI + SQLAlchemy (SQLite local) + Pydantic
+- Backend: Python 3.12 + FastAPI + SQLAlchemy (local SQLite) + Pydantic
 - Frontend: Next.js + TypeScript + Tailwind CSS
-- Processamento: PDF (pypdf) e DOCX (python-docx)
-- LLM: camada de provider abstrata; suporte inicial Anthropic Claude via API; preparado para OpenAI/Gemini
+- Processing: PDF (pypdf) and DOCX (python-docx)
+- LLM: abstract provider layer — Anthropic Claude, OpenAI (GPT/Codex), Google Gemini, OpenAI-compatible endpoints, offline local demo
 - Containers: Docker Compose
-- Config: `.env.example`, sem credenciais reais
+- Config: `.env.example`, no real credentials
 
-## Modos de análise
+## Analysis modes
 
-resumo executivo, comparação entre documentos/versões, itens ausentes, divergências e inconsistências, riscos e não conformidades, plano de ação sugerido.
+executive summary, document/version comparison, missing items, divergences and inconsistencies, risks and nonconformities, suggested action plan.
 
-## Princípios
+## Principles
 
-- Apenas dados sintéticos de exemplo; nenhum dado real/confidencial.
-- MVP demonstrável, sem funcionalidades excessivas.
-- Nunca usar o termo "enterprise" no projeto.
-- Contexto durável: modo Automático (atualizar .ai/ conforme o trabalho avança, sem perguntar de novo). Registrado em HANDOFF.
+- Synthetic example data only; no real/confidential data.
+- Demonstrable MVP, no excessive features.
+- Never use the term "enterprise" in the project.
+- Durable context: Automatic mode (keep .ai/ current as work happens, no need to ask again). Recorded in HANDOFF.

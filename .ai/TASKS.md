@@ -2,7 +2,7 @@
 
 ## Active
 
-- None. Multi-provider support pushed to main (unreleased, post-v0.1.0).
+- None. English-only review of project files in progress.
 
 ## Planned
 
@@ -14,9 +14,9 @@
 
 ## Completed
 
-- [x] Bootstrap do contexto .ai/ (modo Automático, 2026-09-25)
-- [x] Backend FastAPI + prompts versionados + seed sintético
-- [x] Frontend Next.js 7 telas
-- [x] Evaluation + Docker Compose + README EN
+- [x] .ai/ bootstrap (Automatic mode, 2026-09-25)
+- [x] FastAPI backend + versioned prompts + synthetic seed
+- [x] Next.js frontend, 7 screens
+- [x] Evaluation + Docker Compose + English README
 - [x] Public repo crilsen/qualitydocs-ai-copilot + release v0.1.0
 - [x] Multi-provider LLM: OpenAI/Codex, Gemini, OpenAI-compat (OpenCode...), per-run selection (tests 6/6, eval OK, builds OK, pushed)
